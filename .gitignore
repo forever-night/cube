@@ -1,0 +1,18 @@
+# unity
+#
+#
+*.userprefs
+[Ll]ibrary/metadata/
+#
+#
+# Visul Studio
+#
+#
+*.suo
+*.user
+#
+#
+# Other
+#
+#
+*.[Cc]ache
