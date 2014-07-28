@@ -5,8 +5,8 @@ public class EnemyMovement : MonoBehaviour
 {
 	public int size;
 	public bool ignoreColorChange;
-	public SpriteRenderer redSprite;
-	public SpriteRenderer greenSprite;
+	public Sprite red;
+	public Sprite green;
 
 
 	void Start () 
@@ -51,14 +51,14 @@ public class EnemyMovement : MonoBehaviour
 	// green enemies have triggers, red enemies don't
 	private void RedToGreen()
 	{
-		GetComponent<SpriteRenderer>().sprite = greenSprite.sprite;
+		GetComponent<SpriteRenderer>().sprite = green;
 		gameObject.collider2D.isTrigger = true;
 		gameObject.tag = "green";
 	}
 
 	private void GreenToRed()
 	{
-		GetComponent<SpriteRenderer>().sprite = redSprite.sprite;
+		GetComponent<SpriteRenderer>().sprite = red;
 		gameObject.collider2D.isTrigger = false;
 		gameObject.tag = "red";
 	}
