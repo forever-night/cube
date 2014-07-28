@@ -21,14 +21,9 @@ public class PlayerMovement : MonoBehaviour
     void Start () 
     {
         spawn = gameObject.transform.position;
-	PointSystem.level = 0;
-	PointSystem.points = 0;
-	
-	// don't change order
-	// width and height should be set after collider changes
-	ChangePlayer(level);
-        width = gameObject.renderer.bounds.size.x;
-        height = gameObject.renderer.bounds.size.y;
+		PointSystem.level = 0;
+		PointSystem.points = 0;	
+		ChangePlayer(0);
     }
     
 
@@ -47,14 +42,14 @@ public class PlayerMovement : MonoBehaviour
         nextPosition.x += unit * Input.GetAxisRaw ("Horizontal");
 
         // prevents player from going beyond edges of the screen
-        #region
+		#region ScreenBounds
         nextPosition.x = nextPosition.x < leftEdge ? leftEdge : nextPosition.x;
         nextPosition.x = nextPosition.x > (rightEdge - width) ?
             (rightEdge - width) : nextPosition.x;
         nextPosition.y = nextPosition.y > topEdge ? topEdge : nextPosition.y;
         nextPosition.y = nextPosition.y < (bottomEdge + height) ? 
             (bottomEdge + height) : nextPosition.y;
-        #endregion
+		#endregion ScreenBounds
 
         rigidbody2D.MovePosition (nextPosition);
         Input.ResetInputAxes ();
@@ -92,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
     }
     
     
+	// changes sprite, collider and sets height and width
     private void ChangePlayer(int level)
 	{
 		for (int i = 0; i < 5; i++)
@@ -101,8 +97,18 @@ public class PlayerMovement : MonoBehaviour
 			{
 				colliders[level].enabled = true;
 				GetComponent<SpriteRenderer>().sprite = sprites[level].sprite;
+				SetObjectBounds(level);
 			}
 		}
+	}
+
+
+	// gets width and height from colliders in array
+	// collider should be enabled for method to work properly
+	private void SetObjectBounds(int index)
+	{
+		width = colliders[index].bounds.size.x;
+		height = colliders[index].bounds.size.y;
 	}
 }
 
