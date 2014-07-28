@@ -8,18 +8,17 @@ public class PlayerMovement : MonoBehaviour
     private static float topEdge = 2.4f;
     private static float bottomEdge = -1f * topEdge;
     
-//	private bool levelUp = false;
-	private float unit = 0.2f;
+    private float unit = 0.2f;
     private float width;
     private float height;
-	private Vector2 spawn;
-	private Vector2 nextPosition;
-
-	public PolygonCollider2D[] colliders;
-	public SpriteRenderer[] sprites;
-
-
-	void Start () 
+    private Vector2 spawn;
+    private Vector2 nextPosition;
+    
+    public PolygonCollider2D[] colliders;
+    public SpriteRenderer[] sprites;
+    
+    
+    void Start () 
     {
         spawn = gameObject.transform.position;
 		PointSystem.level = 0;
@@ -88,9 +87,9 @@ public class PlayerMovement : MonoBehaviour
             Destroy(food.gameObject);
         }
     }
-
-
-	private void ChangePlayer(int level)
+    
+    
+    private void ChangePlayer(int level)
 	{
 		for (int i = 0; i < 5; i++)
 		{
