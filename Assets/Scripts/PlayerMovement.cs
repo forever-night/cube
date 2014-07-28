@@ -21,9 +21,12 @@ public class PlayerMovement : MonoBehaviour
     void Start () 
     {
         spawn = gameObject.transform.position;
-		PointSystem.level = 0;
-		PointSystem.points = 0;
-		GetComponent<SpriteRenderer>().sprite = sprites[0].sprite;
+	PointSystem.level = 0;
+	PointSystem.points = 0;
+	
+	// don't change order
+	// width and height should be set after collider changes
+	ChangePlayer(level);
         width = gameObject.renderer.bounds.size.x;
         height = gameObject.renderer.bounds.size.y;
     }
@@ -32,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate () 
     {
         Movement();
-		ChangePlayer(PointSystem.level);
+        ChangePlayer(PointSystem.level);
     }
 
 
