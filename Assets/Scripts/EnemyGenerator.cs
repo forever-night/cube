@@ -3,81 +3,64 @@ using System.Collections;
 
 public class EnemyGenerator : MonoBehaviour 
 {
-    public int seconds;
-    public GameObject[] redEnemies;
-    public GameObject[] greenEnemies;
+	GameObject[] enemies;
+	int index;
+
+
+	void Awake()
+	{
+		// creates pool of enemies
+		enemies = new GameObject[] {
+			GameObject.Find ("1e"), GameObject.Find ("1u"), 
+			GameObject.Find ("4e"), GameObject.Find ("4u"), 
+			GameObject.Find ("16e"), GameObject.Find ("16u"),
+			GameObject.Find ("32u")};
+	}
 
 
 	void Start () 
     {
-	    
+			index = Random.Range(0, enemies.Length);
+
+		Instantiate(enemies[index], CreateVector(GenerateX(), GenerateY()), Quaternion.identity);
 	}
 	
 
 	void FixedUpdate () 
     {
-        // call GenerateEnemy() with time intervals = int seconds
+		// repeat every 5 seconds 
+//		#region fixthis
+//		index = Random.Range (0, enemies.Length);
+//		Instantiate(enemies[index], CreateVector(GenerateX(), GenerateY()), Quaternion.identity);
+//		#endregion fixthis
 	}
 
 
-    private void GenerateEnemy()
-    {
-        Instantiate(
-            PickEnemy(), 
-            new Vector2(GenerateCoordinateX(), GenerateCoordinateY()),
-            Quaternion.identity);
-    }
+	// x & y are methods GenerateX & Y
+	private Vector3 CreateVector(int x, int y)
+	{
+		float horizontal = x * 0.1F;
+		float vertical = y * 0.1F;
+		return new Vector3(horizontal, vertical);
+	}
 
 
-    private GameObject PickEnemy()
-    {
-        GameObject enemy;
-        int index;
-
-        // randomly chooses an array, green : red = 1 : 3
-        // randomly chooses enemy index
-        #region enemyPicker
-        int color = Random.Range(1, 4);
-        if (color == 1)
-        {
-            index = PickEnemy(greenEnemies);
-            enemy = greenEnemies[index];
-        }
-        else
-        {
-            index = PickEnemy(redEnemies);
-            enemy = redEnemies[index];
-        }
-        #endregion enemyPicker
-
-        return enemy;
-    }
+	private int GenerateX()
+	{
+		int x = Random.Range (-36, 36);
+		if (x % 2 != 0)
+			x = GenerateX();
+		return x;
+	}
 
 
-    private float GenerateCoordinateX()
-    {
-        float x = Random.Range(-3.6F, 3.6F);
-        if (x % 0.2F != 0)
-            GenerateCoordinateX();
-        return x;
-    }
-
-
-    private float GenerateCoordinateY()
-    {
-        float y = Random.Range(-2.4F, 2.4F);
-        if (y % 0.2F != 0)
-            GenerateCoordinateY();
-        return y;
-    }
-
-
-    // randomly chooses enemy from list
-    private int PickEnemy(GameObject[] enemyArray)
-    {
-        int enemyNumber = Random.Range(0, enemyArray.Length);
-        return enemyNumber;
-    }
+	private int GenerateY()
+	{
+		int y = Random.Range (-24, 24);
+		if (y % 2 != 0)
+			y = GenerateY();
+		return y;
+	}
 }
 
 
