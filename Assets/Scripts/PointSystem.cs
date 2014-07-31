@@ -21,7 +21,7 @@ public class PointSystem : MonoBehaviour
 	}
 
 
-	internal static void AddPoints( EnemyMovement enemy )
+	internal static void AddPoints( Enemy enemy )
 	{
 		points += enemy.size;
 	}

@@ -7,13 +7,13 @@ public class PlayerMovement : MonoBehaviour
     private static float leftEdge = -1f * rightEdge;
     private static float topEdge = 2.4f;
     private static float bottomEdge = -1f * topEdge;
-    
+    internal static bool isDead = false;
+
     private float unit = 0.2f;
-    private float width;
-    private float height;
     private Vector2 spawn;
     private Vector2 nextPosition;
-    
+    internal float width;
+    internal float height;    
     public PolygonCollider2D[] colliders;
     public SpriteRenderer[] sprites;
     
@@ -60,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (enemy.gameObject.tag == "red")
         {
+            isDead = true;
             gameObject.transform.position = spawn;
 			Start();
         }
@@ -70,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (food.gameObject.tag == "green")
         {
-            EnemyMovement enemy = (EnemyMovement)food.gameObject.GetComponent (typeof(EnemyMovement));
+            Enemy enemy = (Enemy)food.gameObject.GetComponent (typeof(Enemy));
 
             // ensure enemy is not null
             try
