@@ -112,16 +112,3 @@ public class PlayerMovement : MonoBehaviour
 		height = colliders[index].bounds.size.y;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
