@@ -121,17 +121,3 @@ public class EnemyGenerator : MonoBehaviour
 		return y;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
