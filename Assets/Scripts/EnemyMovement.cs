@@ -3,63 +3,32 @@ using System.Collections;
 
 public class EnemyMovement : MonoBehaviour 
 {
-	public int size;
-	public bool ignoreColorChange;
-	public Sprite red;
-	public Sprite green;
+	private Vector2 newPosition;
 
 
 	void Start () 
 	{
-		if (gameObject.tag == "red" && size == 32)
-		{
-			ignoreColorChange = true;
-			gameObject.collider2D.isTrigger = false;
-		}
+		InvokeRepeating("MoveLeft", 2F, Random.Range(0.1F, 3.5F));
 	}
 
 
-	void FixedUpdate () 
+	void Update()
 	{
-		ChangeColor();
+		// if enemy is beyond bounds of the screen
+		if (gameObject.name.Contains ("Clone") 
+		    && (gameObject.transform.position.x <= -3.6F - gameObject.collider2D.bounds.size.x
+		    || gameObject.transform.position.x == 3.8F
+		    || gameObject.transform.position.y == -2.4F))
+			Destroy(gameObject);
 	}
 
 
-	private void ChangeColor()
+	// enemy moves left
+	void MoveLeft()
 	{
-		if (ignoreColorChange == false)
-		{
-			// at respawn make green bigger enemies red
-			if(PointSystem.level == 0 
-			   && gameObject.tag == "green" && size > 1)
-				GreenToRed();
-
-			// make red smaller enemies green
-			if (gameObject.tag == "red")
-			{
-				if((PointSystem.level == 1 && size < 4)
-				   || (PointSystem.level == 2 && size < 8)
-				   || (PointSystem.level == 3 && size < 16)
-				   || (PointSystem.level == 4 && size <32))
-					RedToGreen();
-			}
-		}
-	}
-
-
-	// change isTrigger every time color changes
-	// green enemies have triggers, red enemies don't
-	private void RedToGreen()
-	{
-		GetComponent<SpriteRenderer>().sprite = green;
-		gameObject.collider2D.isTrigger = true;
-		gameObject.tag = "green";
-	}
-
-	private void GreenToRed()
-	{
-		GetComponent<SpriteRenderer>().sprite = red;
-		gameObject.collider2D.isTrigger = false;
-		gameObject.tag = "red";
+		newPosition = gameObject.transform.position;
+		if (gameObject.name.Contains ("Clone"))
+			newPosition.x -= 0.2F;
+		gameObject.transform.position = newPosition;
 	}
 }

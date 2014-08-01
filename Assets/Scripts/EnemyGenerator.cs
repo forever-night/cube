@@ -32,8 +32,8 @@ public class EnemyGenerator : MonoBehaviour
         player = GameObject.Find("Player");
         startFoodCount = 0;
         GetPlayerWidthHeightPosition();
-        InvokeRepeating("GenerateFood", 1F, 5F);
-        InvokeRepeating("GenerateEnemy", 1F, 7F);
+        InvokeRepeating("GenerateFood", 1F, 4F);
+        InvokeRepeating("GenerateEnemy", 1F, 2.5F);
         PlayerMovement.isDead = false;
     }
 
@@ -44,6 +44,9 @@ public class EnemyGenerator : MonoBehaviour
 
         if (PlayerMovement.isDead == true)
             Application.LoadLevel(0);
+
+		if (startFoodCount == 6)
+			CancelInvoke("GenerateFood");
     }
 
 
@@ -82,10 +85,10 @@ public class EnemyGenerator : MonoBehaviour
         // fuck this, it's not working properly
         // check if vector intersects player's position
         #region CheckPosition
-        if (horizontal <= (playerPosition.x + playerWidth + 4)
-            && horizontal >= (playerPosition.x - enemy.collider2D.bounds.size.x - 4)
-            && vertical <= (playerPosition.y + enemy.collider2D.bounds.size.y + 4)
-            && vertical >= (playerPosition.y - playerHeight - 4))
+        if (horizontal <= (playerPosition.x + playerWidth + 0.8F)
+            && horizontal >= (playerPosition.x - enemy.collider2D.bounds.size.x - 0.8F)
+            && vertical <= (playerPosition.y + enemy.collider2D.bounds.size.y + 0.8F)
+            && vertical >= (playerPosition.y - playerHeight - 0.8F))
         {
             try{ CreateVector(x, y, enemy); }
             catch (System.StackOverflowException)
