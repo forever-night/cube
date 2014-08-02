@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
 		if (GUI.Button(new Rect(220F, 140F, 280*0.2F, 80*0.2F), "", btnPlay))
 		    Application.LoadLevel (0);
 
-		if (GUI.Button (new Rect(220F, 240F, 280*0.2F, 80*0.2F), "", btnQuit))
+		if (GUI.Button (new Rect(220F, 260F, 280*0.2F, 80*0.2F), "", btnQuit))
 			Application.Quit ();
 	}
 }
