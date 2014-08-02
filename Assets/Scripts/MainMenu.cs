@@ -3,14 +3,15 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour 
 {
-	public GUISkin skin;
-
+	public GUIStyle btnPlay;
+	public GUIStyle btnQuit;
 
 	void OnGUI()
 	{
-		GUI.skin = skin;
+		if (GUI.Button(new Rect(220F, 140F, 280*0.2F, 80*0.2F), "", btnPlay))
+		    Application.LoadLevel (0);
 
-		// ugh i'll just leave it like this
-		// nothing is working, anyway
+		if (GUI.Button (new Rect(220F, 240F, 280*0.2F, 80*0.2F), "", btnQuit))
+			Application.Quit ();
 	}
 }
