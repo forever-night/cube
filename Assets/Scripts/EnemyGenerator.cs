@@ -3,21 +3,18 @@ using System.Collections;
 
 public class EnemyGenerator : MonoBehaviour 
 {
-	private GameObject[] enemies;
-	private int index;
-    private int startFoodCount;
-    private int colorChange;
-    private float playerWidth;
-    private float playerHeight;
+	private int index, startFoodCount, colorChange;
+    private float playerWidth, playerHeight;
     private Vector2 playerPosition;
-    private Vector3 position;
-    private Vector3 foodPosition;
+    private Vector3 position, foodPosition;
     private GameObject player;
+	private GameObject[] enemies;
 
 
     void Awake()
     {
         // creates pool of enemies
+		// e = green, u = red, ui = red, doesn't change color					
         enemies = new GameObject[] {
             GameObject.Find ("1e"), GameObject.Find ("1u"), GameObject.Find ("1ui"), 
             GameObject.Find ("4e"), GameObject.Find ("4u"), GameObject.Find ("4ui"),
@@ -34,16 +31,12 @@ public class EnemyGenerator : MonoBehaviour
         GetPlayerWidthHeightPosition();
         InvokeRepeating("GenerateFood", 1F, 4F);
         InvokeRepeating("GenerateEnemy", 1F, 2.5F);
-        PlayerMovement.isDead = false;
     }
 
 
     void FixedUpdate()
     {
         GetPlayerWidthHeightPosition();
-
-        if (PlayerMovement.isDead == true)
-            Application.LoadLevel(0);
 
 		if (startFoodCount == 6)
 			CancelInvoke("GenerateFood");
@@ -81,8 +74,6 @@ public class EnemyGenerator : MonoBehaviour
 		float horizontal = x * 0.1F;
 		float vertical = y * 0.1F;
 
-        // i h8 unity
-        // fuck this, it's not working properly
         // check if vector intersects player's position
         #region CheckPosition
         if (horizontal <= (playerPosition.x + playerWidth + 0.8F)

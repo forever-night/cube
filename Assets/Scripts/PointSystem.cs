@@ -3,21 +3,19 @@ using System.Collections;
 
 public class PointSystem : MonoBehaviour 
 {
-	internal static int points;
-	internal static int level;
+	internal static int points, level;
 
 
 	void Start () 
 	{
-		points = 0;
-		level = 0;
+		points = level = 0;
 	}
 	
 
 	void FixedUpdate () 
 	{
 		LevelUp();
-		print("level: " + level + ", points: " + points);
+		// print("level: " + level + ", points: " + points);
 	}
 
 

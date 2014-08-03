@@ -7,20 +7,16 @@ public class PlayerMovement : MonoBehaviour
     private static float leftEdge = -1f * rightEdge;
     private static float topEdge = 2.4f;
     private static float bottomEdge = -1f * topEdge;
-    internal static bool isDead = false;
 
     private float unit = 0.2f;
-    private Vector2 spawn;
-    private Vector2 nextPosition;
-    internal float width;
-    internal float height;    
+    internal float width, height;    
+	private Vector2 nextPosition;
     public PolygonCollider2D[] colliders;
     public SpriteRenderer[] sprites;
     
     
     void Start () 
     {
-        spawn = gameObject.transform.position;
 		PointSystem.level = 0;
 		PointSystem.points = 0;	
 		ChangePlayer(0);
@@ -58,12 +54,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D enemy)
     {
+		// calls endscreen
         if (enemy.gameObject.tag == "red")
-        {
-            isDead = true;
-            gameObject.transform.position = spawn;
-			Start();
-        }
+			Application.LoadLevel(2);	
     }
 
 
@@ -73,9 +66,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Enemy enemy = (Enemy)food.gameObject.GetComponent (typeof(Enemy));
 
-            // ensure enemy is not null
+            // make sure enemy is not null
             try
-            {
+			{
                 PointSystem.AddPoints (enemy);
             }
             catch

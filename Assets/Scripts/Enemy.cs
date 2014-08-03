@@ -5,8 +5,7 @@ public class Enemy : MonoBehaviour
 {
 	public int size;
 	public bool ignoreColorChange;
-	public Sprite red;
-	public Sprite green;
+	public Sprite red, green;
 
 
 	void Start () 
