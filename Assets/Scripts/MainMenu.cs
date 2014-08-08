@@ -8,6 +8,11 @@ public class MainMenu : MonoBehaviour
 	GUIContent content = new GUIContent();
 
 
+    void Awake()
+    {
+        Screen.fullScreen = false;
+    }
+
 	void OnGUI()
 	{
 		if (GUI.Button(new Rect(220F, 140F, 280F, 80F), content, btnPlay))
