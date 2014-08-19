@@ -1,0 +1,19 @@
+# Unity
+#
+#
+[Bb]uild/
+[Ll]ibrary/
+[Tt]emp/
+#
+#
+# Visual Studio
+# 
+#
+.csproj
+.sln
+#
+#
+#Other
+#
+#
+.userprefs
