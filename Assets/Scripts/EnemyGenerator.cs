@@ -60,7 +60,7 @@ public class EnemyGenerator : MonoBehaviour
     // generates green enemies of size 1
     void GenerateFood()
     {
-        foodPosition = CreateVector(GenerateX(), GenerateY(), greenEnemies[0]);
+        foodPosition = CreateVector(greenEnemies[0]);
         Instantiate(greenEnemies[0], foodPosition, Quaternion.identity);
         startFoodCount++;
     }
@@ -69,7 +69,7 @@ public class EnemyGenerator : MonoBehaviour
     void GenerateRedEnemy()
     {
         index = Random.Range (0, redEnemies.Length);
-        position = CreateVector(GenerateX(), GenerateY(), redEnemies[index]);
+        position = CreateVector(redEnemies[index]);
         Instantiate(redEnemies[index], position, Quaternion.identity);
     }
 
@@ -77,51 +77,78 @@ public class EnemyGenerator : MonoBehaviour
     void GenerateGreenEnemy()
     {
         index = Random.Range(0, greenEnemies.Length);
-        position = CreateVector(GenerateX(), GenerateY(), greenEnemies[index]);
+        position = CreateVector(greenEnemies[index]);
         Instantiate(greenEnemies[index], position, Quaternion.identity);
     }
 
 
-	// x & y are methods GenerateX & Y
-	private Vector3 CreateVector(int x, int y, GameObject enemy)
+	// enemy is needed to get collider size
+	private Vector3 CreateVector(GameObject enemy)
 	{
-		float horizontal = x * 0.1F;
-		float vertical = y * 0.1F;
+		float x = GenerateX(enemy);
+		float y = GenerateY(enemy);
 
-        // check if vector intersects player's position
+		// check if enemy intersects the player
         #region CheckPosition
-        if (horizontal <= (playerPosition.x + playerWidth + 0.8F)
-            && horizontal >= (playerPosition.x - enemy.collider2D.bounds.size.x - 0.8F)
-            && vertical <= (playerPosition.y + enemy.collider2D.bounds.size.y + 0.8F)
-            && vertical >= (playerPosition.y - playerHeight - 0.8F))
-        {
-            try{ CreateVector(x, y, enemy); }
-            catch (System.StackOverflowException)
-            {
-                horizontal = -4F;
-                vertical = 0F;
-            }
-        }
-        #endregion CheckPosition
+		if (y < playerPosition.y + enemy.collider2D.bounds.size.y + 0.4F
+		    && y > playerPosition.y - playerHeight - 0.4F)
+		{
+			if (x == playerPosition.x + playerWidth)
+				x += 0.6F;
+			else if (x >= playerPosition.x && x <= playerPosition.x + playerWidth)
+				x += 1.4F;
+			else if (playerPosition.x == x + enemy.collider2D.bounds.size.x)
+				x -= 0.6F;
+			else if (x > playerPosition.x - enemy.collider2D.bounds.size.x
+			         && x < playerPosition.x)
+				x = x - enemy.collider2D.bounds.size.x - 0.6F;
+			else
+				x = x;
+		}
+		
+		if (x < playerPosition.x - 0.4F
+		    && x > playerPosition.x + playerWidth + 0.4F)
+		{
+			if (y == playerPosition.y - playerHeight)
+				y -= 0.6F;
+			else if (y <= playerPosition.y && y > playerPosition.y - playerHeight)
+				y = y - playerPosition.y - 0.4F;
+			else if (y - enemy.collider2D.bounds.size.y > playerPosition.y - playerHeight
+			         && y + enemy.collider2D.bounds.size.y < y + 0.4F)
+				y += 0.6F;
+			else if (y == playerPosition.y + enemy.collider2D.bounds.size.y)
+				y += 0.6F;
+			else
+				y = y;
+		}
+		#endregion CheckPosition
 
-		return new Vector3(horizontal, vertical);
+		return new Vector3(x, y);
 	}
 
 
-	private int GenerateX()
+	private float GenerateX(GameObject enemy)
 	{
-		int x = Random.Range (-36, 36);
+		int horizontal = Random.Range (-36, 36);
+		float x = horizontal * 0.1F;
+
+		// check if enemy position is even
 		if (x % 2 != 0)
-			x = GenerateX();
+			x -= 0.1F;
+
 		return x;
 	}
 
 
-	private int GenerateY()
+	private float GenerateY(GameObject enemy)
 	{
-		int y = Random.Range (-24, 24);
+		int vertical = Random.Range (-24, 24);
+		float y = vertical * 0.1F;
+
+		// check if enemy position is even
 		if (y % 2 != 0)
-			y = GenerateY();
+			y -= 0.1F;
+
 		return y;
 	}
 }
