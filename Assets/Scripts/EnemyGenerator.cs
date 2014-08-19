@@ -35,7 +35,7 @@ public class EnemyGenerator : MonoBehaviour
         startFoodCount = 0;
         GetPlayerWidthHeightPosition();
         InvokeRepeating("GenerateFood", 1F, 2.5F);
-        InvokeRepeating("GenerateRedEnemy", 1F, 3F);
+        InvokeRepeating("GenerateRedEnemy", 1F, 2.5F);
         InvokeRepeating("GenerateGreenEnemy", 2F, 3F);
     }
 
@@ -90,6 +90,7 @@ public class EnemyGenerator : MonoBehaviour
 
 		// check if enemy intersects the player
         #region CheckPosition
+
 		if (y < playerPosition.y + enemy.collider2D.bounds.size.y + 0.4F
 		    && y > playerPosition.y - playerHeight - 0.4F)
 		{
@@ -121,7 +122,10 @@ public class EnemyGenerator : MonoBehaviour
 			else
 				y = y;
 		}
+
 		#endregion CheckPosition
+
+		print("final " + x + ", " + y);
 
 		return new Vector3(x, y);
 	}
@@ -130,12 +134,9 @@ public class EnemyGenerator : MonoBehaviour
 	private float GenerateX(GameObject enemy)
 	{
 		int horizontal = Random.Range (-36, 36);
+		if (horizontal % 2 != 0)
+			horizontal--;
 		float x = horizontal * 0.1F;
-
-		// check if enemy position is even
-		if (x % 2 != 0)
-			x -= 0.1F;
-
 		return x;
 	}
 
@@ -143,12 +144,9 @@ public class EnemyGenerator : MonoBehaviour
 	private float GenerateY(GameObject enemy)
 	{
 		int vertical = Random.Range (-24, 24);
+		if (vertical % 2 != 0)
+			vertical--;
 		float y = vertical * 0.1F;
-
-		// check if enemy position is even
-		if (y % 2 != 0)
-			y -= 0.1F;
-
 		return y;
 	}
 }
