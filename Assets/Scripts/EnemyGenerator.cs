@@ -8,19 +8,25 @@ public class EnemyGenerator : MonoBehaviour
     private Vector2 playerPosition;
     private Vector3 position, foodPosition;
     private GameObject player;
-	private GameObject[] enemies;
+//	private GameObject[] enemies;
+    private GameObject[] greenEnemies;
+    private GameObject[] redEnemies;
 
 
     void Awake()
     {
         // creates pool of enemies
 		// e = green, u = red, ui = red, doesn't change color					
-        enemies = new GameObject[] {
-            GameObject.Find ("1e"), GameObject.Find ("1u"), GameObject.Find ("1ui"), 
-            GameObject.Find ("4e"), GameObject.Find ("4u"), GameObject.Find ("4ui"),
-            GameObject.Find ("8e"), GameObject.Find ("8u"), GameObject.Find ("8ui"),
-            GameObject.Find ("16e"), GameObject.Find ("16u"), GameObject.Find ("16ui"),
+        redEnemies = new GameObject[] {
+            GameObject.Find ("1u"), GameObject.Find ("1ui"), 
+            GameObject.Find ("4u"), GameObject.Find ("4ui"),
+            GameObject.Find ("8u"), GameObject.Find ("8ui"),
+            GameObject.Find ("16u"), GameObject.Find ("16ui"),
             GameObject.Find ("32ui")};
+
+        greenEnemies = new GameObject[] {
+            GameObject.Find ("1e"), GameObject.Find ("4e"), 
+            GameObject.Find ("8e"), GameObject.Find ("16e")};
     }
 
 
@@ -30,7 +36,8 @@ public class EnemyGenerator : MonoBehaviour
         startFoodCount = 0;
         GetPlayerWidthHeightPosition();
         InvokeRepeating("GenerateFood", 1F, 4F);
-        InvokeRepeating("GenerateEnemy", 1F, 2.5F);
+        InvokeRepeating("GenerateRedEnemy", 1F, 2.5F);
+        InvokeRepeating("GenerateGreenEnemy", 2F, 3F);
     }
 
 
@@ -54,17 +61,25 @@ public class EnemyGenerator : MonoBehaviour
     // generates green enemies of size 1
     void GenerateFood()
     {
-        foodPosition = CreateVector(GenerateX(), GenerateY(), enemies[0]);
-        Instantiate(enemies[0], foodPosition, Quaternion.identity);
+        foodPosition = CreateVector(GenerateX(), GenerateY(), greenEnemies[0]);
+        Instantiate(greenEnemies[0], foodPosition, Quaternion.identity);
         startFoodCount++;
     }
 
 
-    void GenerateEnemy()
+    void GenerateRedEnemy()
     {
-        index = Random.Range (0, enemies.Length);
-        position = CreateVector(GenerateX(), GenerateY(), enemies[index]);
-        Instantiate(enemies[index], position, Quaternion.identity);
+        index = Random.Range (0, redEnemies.Length);
+        position = CreateVector(GenerateX(), GenerateY(), redEnemies[index]);
+        Instantiate(redEnemies[index], position, Quaternion.identity);
+    }
+
+
+    void GenerateGreenEnemy()
+    {
+        index = Random.Range(0, greenEnemies.Length);
+        position = CreateVector(GenerateX(), GenerateY(), greenEnemies[index]);
+        Instantiate(greenEnemies[index], position, Quaternion.identity);
     }
 
 
