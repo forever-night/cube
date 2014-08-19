@@ -4,6 +4,7 @@
 *.userprefs
 [Ll]ibrary/
 [Tt]emp/
+[Bb]uild/
 #
 #
 # Visul Studio
