@@ -8,7 +8,6 @@ public class EnemyGenerator : MonoBehaviour
     private Vector2 playerPosition;
     private Vector3 position, foodPosition;
     private GameObject player;
-//	private GameObject[] enemies;
     private GameObject[] greenEnemies;
     private GameObject[] redEnemies;
 
@@ -35,8 +34,8 @@ public class EnemyGenerator : MonoBehaviour
         player = GameObject.Find("Player");
         startFoodCount = 0;
         GetPlayerWidthHeightPosition();
-        InvokeRepeating("GenerateFood", 1F, 4F);
-        InvokeRepeating("GenerateRedEnemy", 1F, 2.5F);
+        InvokeRepeating("GenerateFood", 1F, 2.5F);
+        InvokeRepeating("GenerateRedEnemy", 1F, 3F);
         InvokeRepeating("GenerateGreenEnemy", 2F, 3F);
     }
 
@@ -45,7 +44,7 @@ public class EnemyGenerator : MonoBehaviour
     {
         GetPlayerWidthHeightPosition();
 
-		if (startFoodCount == 6)
+		if (startFoodCount == 8)
 			CancelInvoke("GenerateFood");
     }
 
@@ -101,7 +100,6 @@ public class EnemyGenerator : MonoBehaviour
             {
                 horizontal = -4F;
                 vertical = 0F;
-                return new Vector3(horizontal, vertical);
             }
         }
         #endregion CheckPosition
