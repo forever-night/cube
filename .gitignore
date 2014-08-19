@@ -1,0 +1,23 @@
+# unity
+#
+#
+*.userprefs
+[Ll]ibrary/
+[Tt]emp/
+[Aa]ssets/
+[Pp]rojectSettings/
+#
+#
+# Visul Studio
+#
+#
+*.suo
+*.user
+*.csproj
+*.sln
+#
+#
+# Other
+#
+#
+*.[Cc]ache
